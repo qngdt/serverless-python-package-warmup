@@ -1,0 +1,53 @@
+service: aws-python-http-api-project
+frameworkVersion: '3'
+
+package:
+  individually: True
+  patterns:
+    - '!.DS_Store'
+    - '!.requirements/**'
+    - '!README.md'
+    - '!_build'
+    - '!env/**'
+    - '!node_modules/**'
+    - '!package-lock.json'
+    - '!package.json'
+    - '!requirements.txt'
+
+plugins:
+  - serverless-package-python-functions
+  - serverless-plugin-warmup
+
+provider:
+  name: aws
+  runtime: python3.8
+
+custom:
+  pkgPyFuncs:
+    buildDir: _build
+    requirementsFile: '../requirements.txt'
+    globalIncludes:
+      - ./common_files
+    abortOnPackagingErrors: true
+    cleanup: True
+
+  warmup:
+    default:
+      enabled: false
+      cleanFolder: false
+
+functions:
+  hello:
+    name: hello
+    handler: handler.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+    package:
+      include:
+        - handler
+      artifact: _build/hello.zip
+    warmup:
+      default:
+        enabled: true
