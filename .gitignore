@@ -20,3 +20,4 @@ var/
 .serverless
 _build
 .warmup
+node_modules/

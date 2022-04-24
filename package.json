@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "serverless-package-python-functions": "^0.7.0",
+    "serverless-plugin-warmup": "^7.1.0"
+  }
+}
